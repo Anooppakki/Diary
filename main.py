@@ -1,14 +1,14 @@
 from flask import Flask, request , render_template , redirect
 import time , sqlite3
 global auth
-auth = 0
+auth = False
 app = Flask(__name__)
 
 
 @app.route('/',methods = ['GET','POST'])
 def index():
     global auth
-    if auth == 1:
+    if auth == True:
         return redirect('/posts',code=302)
     else:
         return render_template("root.html")
@@ -37,7 +37,7 @@ def verify():
             c.execute("insert into user_details ( serial_number , username,password) values (null , ?,?)",
                       (username, password))
             conn.commit()
-            auth = 1
+            auth = True
             return redirect('/',code=302)
         else:
             return "USERNAME TAKEN. GO BACK AND CHOOSE OTHER ONE SON"
@@ -61,8 +61,8 @@ def login_verification():
             db_username = details[1]
             db_password = details[2]
             if db_password == password and db_username == username:
-                auth = 1
-
+                auth = True
+	
                 return redirect('/',code=302)
             else:
                 return "INVALID CREDENTIALS. GO BACK AND TRY AGAIN"
