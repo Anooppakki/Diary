@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.route('/',methods = ['GET','POST'])
 def index():
     global auth
-    if auth == True:
+    if auth = True:
         return redirect('/posts',code=302)
     else:
         return render_template("root.html")
